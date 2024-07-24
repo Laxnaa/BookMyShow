@@ -1,6 +1,7 @@
 package com.example.bms.Service;
 
-import com.example.bms.Exception.InvalidBookingTicketException;
+import com.example.bms.Exception.InvalidBookTicketRequestException;
+import com.example.bms.Exception.SeatUnavailableException;
 import com.example.bms.Repository.ShowSeatRepository;
 import com.example.bms.Repository.TicketRepository;
 import com.example.bms.models.*;
@@ -42,7 +43,7 @@ public class TicketServiceImpl implements TicketService {
 
         Optional<User> optionalUser = userService.findUserById(userId);
         if(optionalUser.isEmpty()){
-            throw new InvalidBookingTicketException("User is not Valid. ");
+            throw new InvalidBookTicketRequestException("User is not Valid. ");
         }
         User user = optionalUser.get();
 
@@ -50,20 +51,20 @@ public class TicketServiceImpl implements TicketService {
         //Show show = this.showService.findById(showId).orElseThrow(() -> new InvalidBookTicketRequestException("Show id is invalid"));
         Optional<Show> optionalShow = showService.findShowById(showId);
         if(optionalShow.isEmpty()){
-            throw new InvalidBookingTicketException("Show does not Exist. ");
+            throw new InvalidBookTicketRequestException("Show does not Exist. ");
         }
         Show show = optionalShow.get();
 
         Optional<ShowSeat> optionalShowSeat = showSeatService.findById(showSeatIds.get(0));
         if(optionalShowSeat.isEmpty()){
-            throw new InvalidBookingTicketException("Seat id is invalid.");
+            throw new InvalidBookTicketRequestException("Seat id is invalid.");
         }
         if(optionalShowSeat.get().getShow().getId() != showId){
-            throw new InvalidBookingTicketException("given all the seats does not belong to the same Show.");
+            throw new InvalidBookTicketRequestException("given all the seats does not belong to the same Show.");
         }
         List<ShowSeat> showSeatList = showSeatService.findShowSeatByIdInAndSeatStatus_AvailableAndShow(showSeatIds, show);
         if(showSeatList.size() != showSeatIds.size()){
-            throw new InvalidBookingTicketException("Some of the tickets you are trying to book are not available");
+            throw new SeatUnavailableException("Some of the tickets you are trying to book are not available");
         }
 
         //we are BLOCKING after payment verification it gonna be changed to Booked

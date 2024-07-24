@@ -4,7 +4,7 @@ import com.example.bms.Service.TicketService;
 import com.example.bms.DTO.BookTicketRequestDTO;
 import com.example.bms.DTO.BookTicketResponseDTO;
 import com.example.bms.DTO.Response;
-import com.example.bms.Exception.InvalidBookingTicketException;
+import com.example.bms.Exception.InvalidBookTicketRequestException;
 import com.example.bms.models.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,19 +33,19 @@ public class TicketController {
         }
         return responseDTO ;
     }
-    public static void validateBookTicketRequest(BookTicketRequestDTO requestDTO) throws InvalidBookingTicketException{
+    public static void validateBookTicketRequest(BookTicketRequestDTO requestDTO) throws InvalidBookTicketRequestException {
         if(requestDTO.getUserId() <= 0){
-            throw new InvalidBookingTicketException("User id cannot be zero ro negative");
+            throw new InvalidBookTicketRequestException("User id cannot be zero ro negative");
         }
         if(requestDTO.getShowId() <= 0){
-            throw new InvalidBookingTicketException("Show id cannot be zero ro negative");
+            throw new InvalidBookTicketRequestException("Show id cannot be zero ro negative");
         }
         if(requestDTO.getShowSeatId() == null || requestDTO.getShowSeatId().isEmpty()){
-            throw new InvalidBookingTicketException("Seat id should be present");
+            throw new InvalidBookTicketRequestException("Seat id should be present");
         }
         for(int id : requestDTO.getShowSeatId()){
             if(id <= 0){
-                throw new InvalidBookingTicketException("Show id cannot be zero ro negative");
+                throw new InvalidBookTicketRequestException("Show id cannot be zero ro negative");
             }
         }
     }
