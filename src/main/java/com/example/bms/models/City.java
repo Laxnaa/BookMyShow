@@ -11,6 +11,7 @@ import java.util.List;
 @Entity(name = "cities") //annotation for creating a class
 public class City extends BaseModel{
     private String name;
-    @OneToMany()
+    @OneToMany(mappedBy = "city")
+    //mappingby the City object(by the object name) created in the theatre
     private List<Theatre> theatres;
 }

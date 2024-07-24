@@ -10,7 +10,7 @@ import java.util.List;
 @Entity(name= "screens")
 public class Screen extends BaseModel {
     private String name;
-    @OneToMany(mappedBy = "screens")
+    @OneToMany(mappedBy = "screen")
     private List<Seat> seats;
     @ManyToOne
     private Theatre theatre;

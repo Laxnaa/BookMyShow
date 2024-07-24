@@ -14,7 +14,8 @@ public class Ticket extends BaseModel{
     @ManyToOne
     private Show show;
     @OneToMany(mappedBy = "ticker")
-    private List<ShowSeat> showseat;
+    private List<ShowSeat> showSeat;
+    //show
     @ManyToOne
     private User user;
 }

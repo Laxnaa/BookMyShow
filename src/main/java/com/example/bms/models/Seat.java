@@ -1,6 +1,7 @@
 package com.example.bms.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -8,4 +9,6 @@ import lombok.Data;
 public class Seat extends BaseModel{
     private String name;
     private SeatType seatType;
+    @ManyToOne
+    private Seat seat;
 }
